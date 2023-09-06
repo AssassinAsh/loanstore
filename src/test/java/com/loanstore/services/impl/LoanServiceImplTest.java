@@ -1,6 +1,7 @@
 package com.loanstore.services.impl;
 
 import com.loanstore.bos.LoansBo;
+import com.loanstore.components.AggregationComponent;
 import com.loanstore.dtos.LoanRequestDto;
 import com.loanstore.dtos.LoanResponseDto;
 import com.loanstore.entities.LoansEntity;
@@ -33,6 +34,9 @@ class LoanServiceImplTest {
 
     @Mock
     private LoanMasterRepo loanMasterRepo;
+
+    @Mock
+    private AggregationComponent aggregationComponent;
 
     @Mock
     private LoansMapper loansMapper;
