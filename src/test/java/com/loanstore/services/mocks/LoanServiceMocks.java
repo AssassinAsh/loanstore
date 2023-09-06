@@ -39,7 +39,7 @@ public class LoanServiceMocks {
 
     public static LoansBo getValidLoanBo() throws Exception {
         LoansBo bo = new LoansBo();
-        bo.setPaymentDate(DateUtils.getDateFromString("24-01-2020", "dd-mm-yyyy"));
+        bo.setPaymentDate(DateUtils.getDateFromString("24-12-2019", "dd-mm-yyyy"));
         bo.setDueDate(DateUtils.getDateFromString("20-02-2020", "dd-mm-yyyy"));
         bo.setLoanId(123);
         bo.setCustomerId(455);

@@ -12,7 +12,7 @@ To use the DB -
 USE loanstore;
 
 To grant all privileges to the user -
-GRANT ALL PRIVILEGES on loanstore to greychain@localhost;
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES ON loanstore.* TO 'greychain'@'localhost';
 
 To create Tables - 
 

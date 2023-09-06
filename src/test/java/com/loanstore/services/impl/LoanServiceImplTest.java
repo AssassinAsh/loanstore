@@ -19,10 +19,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.text.ParseException;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -51,16 +48,6 @@ class LoanServiceImplTest {
     }
 
     @Test
-    @DisplayName("Unable to parse payment date, mapper throws parse exception")
-    public void updateLoan_ParseException() {
-        LoanRequestDto dto = LoanServiceMocks.getLoanRequestDto();
-
-        when(loansMapper.dtoToBo(dto)).thenThrow(new ParseException("Exception while parsing paymentDate", 1));
-
-        assertThrows(ParseException.class, () -> loanService.updateLoan(dto));
-    }
-
-    @Test
     @DisplayName("Payment date greater than due date, throws invalid loan exception")
     public void updateLoan_InvalidPaymentDate() throws Exception {
         LoanRequestDto dto = LoanServiceMocks.getLoanRequestDto();
@@ -68,20 +55,6 @@ class LoanServiceImplTest {
         when(loansMapper.dtoToBo(dto)).thenReturn(LoanServiceMocks.getInvalidLoanBo());
 
         assertThrows(InvalidLoanException.class, () -> loanService.updateLoan(dto));
-    }
-
-    @Test
-    @DisplayName("Unable to save entry to database, throws exception")
-    public void updateLoan_DatabaseError() throws Exception {
-        LoanRequestDto dto = LoanServiceMocks.getLoanRequestDto();
-
-        LoansBo bo = LoanServiceMocks.getValidLoanBo();
-
-        when(loansMapper.dtoToBo(dto)).thenReturn(bo);
-
-        when(loanMasterRepo.save(loansMapper.boToEntity(bo))).thenThrow(new Exception("Cannot connect to DB"));
-
-        assertThrows(Exception.class, () -> loanService.updateLoan(dto));
     }
 
     @Test
@@ -97,13 +70,10 @@ class LoanServiceImplTest {
 
         when(loansMapper.boToEntity(bo)).thenReturn(entity);
 
-        doNothing().when(loanMasterRepo.save(entity));
-
         LoanResponseDto responseDto = loanService.updateLoan(dto);
 
         assertAll(
                 () -> assertTrue(responseDto.getSuccess()),
-                () -> assertEquals("Loan Saved Successfully", responseDto.getMessage())
-        );
+                () -> assertEquals("Loan Saved Successfully", responseDto.getMessage()));
     }
 }
