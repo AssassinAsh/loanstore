@@ -6,5 +6,5 @@ import com.loanstore.dtos.LoanResponseDto;
 
 public interface LoanService {
 
-    LoanResponseDto updateLoan(LoanRequestDto dto);
+    LoanResponseDto updateLoan(LoanRequestDto dto) throws Exception;
 }
