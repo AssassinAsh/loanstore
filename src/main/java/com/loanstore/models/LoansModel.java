@@ -1,24 +1,34 @@
 package com.loanstore.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The type Loans model.
  */
 public class LoansModel {
 
+    @JsonProperty("loanId")
     private Integer loanId;
 
+    @JsonProperty("customerId")
     private Integer customerId;
 
+    @JsonProperty("lenderId")
     private Integer lenderId;
 
+    @JsonProperty("amount")
     private Double amount;
 
+    @JsonProperty("remainingAmount")
     private Double remainingAmount;
 
+    @JsonProperty("interest")
     private Double interest;
 
+    @JsonProperty("penalty")
     private Double penalty;
 
+    @JsonProperty("cancelled")
     private Boolean cancelled;
 
     /**

@@ -1,5 +1,6 @@
 package com.loanstore.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.loanstore.models.LoansModel;
 
 /**
@@ -7,8 +8,10 @@ import com.loanstore.models.LoansModel;
  */
 public class LoanRequestDto extends LoansModel {
 
+    @JsonProperty("paymentDate")
     private String paymentDate;
 
+    @JsonProperty("dueDate")
     private String dueDate;
 
     public String getPaymentDate() {
