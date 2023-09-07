@@ -2,6 +2,8 @@ package com.loanstore.services.mocks;
 
 import com.loanstore.bos.LoansBo;
 import com.loanstore.dtos.LoanRequestDto;
+import com.loanstore.entities.CustomerEntity;
+import com.loanstore.entities.LenderEntity;
 import com.loanstore.entities.LoansEntity;
 import com.loanstore.utils.DateUtils;
 
@@ -65,6 +67,23 @@ public class LoanServiceMocks {
         entity.setRemainingAmount(21212.00);
         entity.setCancelled(false);
         return entity;
+    }
 
+    public static CustomerEntity getCustomerEntity() {
+        CustomerEntity customer = new CustomerEntity();
+        customer.setCustomerId(455);
+        customer.setTotalInterest(50.0);
+        customer.setTotalRemainingAmount(200.0);
+        customer.setTotalPenalty(10.0);
+        return customer;
+    }
+
+    public static LenderEntity getLenderEntity() {
+        LenderEntity lender = new LenderEntity();
+        lender.setLenderId(12124);
+        lender.setTotalInterest(50.0);
+        lender.setTotalRemainingAmount(200.0);
+        lender.setTotalPenalty(10.0);
+        return lender;
     }
 }
