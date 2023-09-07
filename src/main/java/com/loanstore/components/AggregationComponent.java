@@ -37,6 +37,11 @@ public class AggregationComponent {
         updateLenderAggregation(bo);
     }
 
+    /**
+     * Retrieves Customer's aggregate data from DB, combines with incoming data and updates DB.
+     *
+     * @param bo - Incoming Loan Data.
+     */
     public void updateCustomerAggregation(LoansBo bo) {
 
         CustomerEntity customer = customerSlaveRepo.findByCustomerId(bo.getCustomerId());
@@ -56,6 +61,11 @@ public class AggregationComponent {
         customerMasterRepo.save(customer);
     }
 
+    /**
+     * Retrieves Lender's aggregate data from DB, combines with incoming data and updates DB.
+     *
+     * @param bo - Incoming Loan Data.
+     */
     public void updateLenderAggregation(LoansBo bo) {
         LenderEntity lender = lenderSlaveRepo.findByLenderId(bo.getLenderId());
 
@@ -74,11 +84,21 @@ public class AggregationComponent {
         lenderMasterRepo.save(lender);
     }
 
+    /**
+     * Calculates the total remaining amount based on existing and new loans.
+     *
+     * @param loan - Incoming Loan Data.
+     */
     private Double getInterest(LoansBo loan) {
         return loan.getRemainingAmount() * loan.getInterest() *
                 DateUtils.getDateDifference(loan.getPaymentDate(), new Date()) * 0.01;
     }
 
+    /**
+     * Calculates the total penalty based on existing and new loans.
+     *
+     * @param loan - Incoming Loan Data.
+     */
     private Double getPenalty(LoansBo loan) {
         return loan.getRemainingAmount() * loan.getPenalty() *
                 DateUtils.getDateDifference(loan.getDueDate(), new Date()) * 0.01;

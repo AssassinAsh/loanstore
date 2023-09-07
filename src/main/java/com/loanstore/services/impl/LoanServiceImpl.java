@@ -30,8 +30,10 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public LoanResponseDto updateLoan(LoanRequestDto dto) throws InvalidLoanException {
 
+        // Convert loan DTO to BO.
         LoansBo bo = loansMapper.dtoToBo(dto);
 
+        // Returns Error if Payment Date is greater than Due Date.
         if (bo.getPaymentDate().after(bo.getDueDate())) {
 
             LOGGER.error("Payment Date: {} is greater than Due Date: {}", bo.getPaymentDate(), bo.getDueDate());
@@ -39,8 +41,10 @@ public class LoanServiceImpl implements LoanService {
             throw new InvalidLoanException("Payment date cannot be greater than due date.");
         }
 
+        // Triggering aggregation of Data.
         aggregationComponent.updateAggregateData(bo);
 
+        // Saving the Loan data into Database.
         loanMasterRepo.save(loansMapper.boToEntity(bo));
 
         return new LoanResponseDto(true, "Loan Saved Successfully");
