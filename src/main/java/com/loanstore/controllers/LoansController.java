@@ -25,6 +25,11 @@ public class LoansController {
         this.loanService = loanService;
     }
 
+    /**
+     * Returns Saves the incoming loan data and returns response.
+     * @param dto - Loan Request consisting the loan data.
+     * @return - Loan Response consisting success flag along with a message.
+     */
     @PostMapping(path = "update")
     public ResponseEntity<LoanResponseDto> updateLoan(@RequestBody LoanRequestDto dto) {
         try {

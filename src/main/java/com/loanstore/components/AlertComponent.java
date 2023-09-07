@@ -21,6 +21,9 @@ public class AlertComponent {
     @Autowired
     private LoanSlaveRepo loanSlaveRepo;
 
+    /**
+     * Scheduler Job - Runs every 10 seconds to retrieve all the loans than have exceeded their due dates.
+     */
     @Scheduled(fixedDelay = 10 * 1000)
     public void retrieveLoansCrossingDueDate() {
         List<LoansEntity> loans = loanSlaveRepo.findByDueDateBefore(new Date());
