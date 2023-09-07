@@ -1,6 +1,7 @@
 package com.loanstore.services.impl;
 
 import com.loanstore.bos.LoansBo;
+import com.loanstore.components.AggregationComponent;
 import com.loanstore.dtos.LoanRequestDto;
 import com.loanstore.dtos.LoanResponseDto;
 import com.loanstore.entities.LoansEntity;
@@ -22,7 +23,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
 @ExtendWith(SpringExtension.class)
 class LoanServiceImplTest {
 
@@ -33,6 +33,9 @@ class LoanServiceImplTest {
 
     @Mock
     private LoanMasterRepo loanMasterRepo;
+
+    @Mock
+    private AggregationComponent aggregationComponent;
 
     @Mock
     private LoansMapper loansMapper;

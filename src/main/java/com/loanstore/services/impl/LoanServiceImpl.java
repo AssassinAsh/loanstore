@@ -1,6 +1,7 @@
 package com.loanstore.services.impl;
 
 import com.loanstore.bos.LoansBo;
+import com.loanstore.components.AggregationComponent;
 import com.loanstore.dtos.LoanRequestDto;
 import com.loanstore.dtos.LoanResponseDto;
 import com.loanstore.exceptions.InvalidLoanException;
@@ -23,8 +24,12 @@ public class LoanServiceImpl implements LoanService {
     @Autowired
     private LoansMapper loansMapper;
 
+    @Autowired
+    private AggregationComponent aggregationComponent;
+
     @Override
     public LoanResponseDto updateLoan(LoanRequestDto dto) throws InvalidLoanException {
+
         LoansBo bo = loansMapper.dtoToBo(dto);
 
         if (bo.getPaymentDate().after(bo.getDueDate())) {
@@ -33,6 +38,8 @@ public class LoanServiceImpl implements LoanService {
 
             throw new InvalidLoanException("Payment date cannot be greater than due date.");
         }
+
+        aggregationComponent.updateAggregateData(bo);
 
         loanMasterRepo.save(loansMapper.boToEntity(bo));
 
