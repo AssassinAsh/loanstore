@@ -18,16 +18,28 @@ repositories {
 }
 
 dependencies {
+	//Database Dependencies
 	implementation 'mysql:mysql-connector-java:8.0.28'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	//Web Application Dependencies
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	//Mapper Dependencies
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	implementation 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-	annotationProcessor group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
-	annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.4.2.Final'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	annotationProcessor 'org.mapstruct:mapstruct:1.4.2.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
+	//JUnit
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'junit', module: 'junit'
+	}
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+	testImplementation 'org.junit.jupiter:junit-jupiter-params:5.4.2'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }

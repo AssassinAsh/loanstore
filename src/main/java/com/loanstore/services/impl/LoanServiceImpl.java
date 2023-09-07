@@ -3,6 +3,7 @@ package com.loanstore.services.impl;
 import com.loanstore.bos.LoansBo;
 import com.loanstore.dtos.LoanRequestDto;
 import com.loanstore.dtos.LoanResponseDto;
+import com.loanstore.exceptions.InvalidLoanException;
 import com.loanstore.mappers.LoansMapper;
 import com.loanstore.repositories.master.LoanMasterRepo;
 import com.loanstore.services.LoanService;
@@ -16,28 +17,25 @@ public class LoanServiceImpl implements LoanService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoanService.class);
 
-    private final LoanMasterRepo loanMasterRepo;
-
-    private final LoansMapper loansMapper;
+    @Autowired
+    private LoanMasterRepo loanMasterRepo;
 
     @Autowired
-    public LoanServiceImpl(LoanMasterRepo loanMasterRepo, LoansMapper loansMapper) {
-        this.loanMasterRepo = loanMasterRepo;
-        this.loansMapper = loansMapper;
-    }
+    private LoansMapper loansMapper;
 
     @Override
-    public LoanResponseDto updateLoan(LoanRequestDto dto) {
-        try {
-            LoansBo bo = loansMapper.dtoToBo(dto);
+    public LoanResponseDto updateLoan(LoanRequestDto dto) throws InvalidLoanException {
+        LoansBo bo = loansMapper.dtoToBo(dto);
 
-            loanMasterRepo.save(loansMapper.boToEntity(bo));
+        if (bo.getPaymentDate().after(bo.getDueDate())) {
 
-            return new LoanResponseDto(true, "Loan Saved Successfully");
-        } catch (Exception ex) {
-            LOGGER.error("Error while updating loan data: {}", ex.getMessage());
+            LOGGER.error("Payment Date: {} is greater than Due Date: {}", bo.getPaymentDate(), bo.getDueDate());
 
-            return new LoanResponseDto(false, "Unsuccessful", ex.getMessage());
+            throw new InvalidLoanException("Payment date cannot be greater than due date.");
         }
+
+        loanMasterRepo.save(loansMapper.boToEntity(bo));
+
+        return new LoanResponseDto(true, "Loan Saved Successfully");
     }
 }
