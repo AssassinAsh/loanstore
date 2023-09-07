@@ -71,5 +71,10 @@ Sample Request -
     "dueDate": "05-08-2023"
 }
 
+## Important Files -
 
+1. LoansController - Consists of the Loan API.
+2. LoanServiceImpl - Validates and Saves Loan Data to DB.
+3. AggregationComponent - Aggregates Loan Data and Saves to DB.
+4. AlertComponent - Retrieves all the loans which have exceeded their due dates.
 
